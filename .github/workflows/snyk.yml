@@ -11,10 +11,9 @@ jobs:
           repository: 'folio-org/platform-lsp'
           ref: 'R1-2025'
       - run: 'yarn config set @folio:registry https://repository.folio.org/repository/npm-folio/'
-      - run: yarn install
       - uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --org=80bd346a-5d89-4cdc-a78a-73cd9fad2c1b
+          args: --org=julianladisch
