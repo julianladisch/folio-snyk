@@ -1,23 +1,30 @@
 name: Snyk monitor
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '49 1 * * *'
 permissions:
   contents: read
 jobs:
   snyk:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch: [R1-2025, snapshot]
     steps:
       - uses: actions/checkout@v6
         with:
           repository: 'folio-org/platform-lsp'
-          ref: 'R1-2025'
+          ref: ${{ matrix.branch }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '*'
+          cache: yarn
       - run: 'yarn config set @folio:registry https://repository.folio.org/repository/npm-folio/'
       - run: yarn install
-      - run: ls -al
-      #- run: |
-      #    sed -i 's/^  "name": "@folio/platform-complete",/  "name": "R1-2025",/'
       - uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK }}
         with:
           command: monitor
-          args: --target-reference=R1-2025
+          args: --target-reference=${{ matrix.branch }}
