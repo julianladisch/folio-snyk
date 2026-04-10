@@ -8,7 +8,7 @@ jobs:
     steps:
       - run: echo "$SNYK_TOKEN" | wc
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK }}
       - uses: actions/checkout@v6
         with:
           repository: 'folio-org/platform-lsp'
@@ -17,6 +17,6 @@ jobs:
       - run: yarn install
       - uses: snyk/actions/node@master
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK }}
         with:
           command: monitor
