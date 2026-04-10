@@ -6,7 +6,7 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@6
+      - uses: actions/checkout@v6
         with:
           repository: 'folio-org/platform-lsp'
           ref: 'R1-2025'
