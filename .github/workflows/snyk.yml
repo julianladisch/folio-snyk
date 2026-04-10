@@ -10,11 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch: [R1-2025, snapshot]
+        include:
+          - repository: folio-org/platform-lsp
+            branch: R1-2025
+          - repository: folio-org/platform-lsp
+            branch: snapshot
+          - repository: folio-org/platform-complete
+            branch: R1-2025-okapi
     steps:
       - uses: actions/checkout@v6
         with:
-          repository: 'folio-org/platform-lsp'
+          repository: ${{ matrix.repository }}
           ref: ${{ matrix.branch }}
       - uses: actions/setup-node@v6
         with:
