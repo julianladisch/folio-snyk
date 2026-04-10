@@ -6,17 +6,18 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "$SNYK_TOKEN" | wc
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK }}
       - uses: actions/checkout@v6
         with:
           repository: 'folio-org/platform-lsp'
           ref: 'R1-2025'
       - run: 'yarn config set @folio:registry https://repository.folio.org/repository/npm-folio/'
       - run: yarn install
+      - run: ls -al
+      #- run: |
+      #    sed -i 's/^  "name": "@folio/platform-complete",/  "name": "R1-2025",/'
       - uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK }}
         with:
           command: monitor
+          args: --target-reference=R1-2025
