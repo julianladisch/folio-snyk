@@ -12,6 +12,8 @@ jobs:
       matrix:
         include:
           - repository: folio-org/platform-lsp
+            branch: R1-2026
+          - repository: folio-org/platform-lsp
             branch: R1-2025
           - repository: folio-org/platform-lsp
             branch: snapshot
